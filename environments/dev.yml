@@ -1,7 +1,9 @@
 machines:
   db:
+    - common
     - mysql
   www:
+    - common
     - ruby19
     - nginx
     - passenger
