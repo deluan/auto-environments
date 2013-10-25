@@ -25,6 +25,7 @@ class PlaybookFile
             }
             file.write play.to_yaml
         end
+        file.close
         file.path
     end
 end

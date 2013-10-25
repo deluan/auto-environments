@@ -1,5 +1,11 @@
 #!/usr/bin/env ruby
 
 require 'yaml'
+require './lib/environment.rb'
+require './lib/inventory_file.rb'
 
-puts YAML.load_file('environments/dev.yml')
+environment = Environment.new File.new('environments/dev.yml')
+hosts_path = environment.create_inventory InventoryFile.new 'petshop.example.com', 'dev'
+
+hosts_file = File.new hosts_path, 'r'
+puts hosts_file.read

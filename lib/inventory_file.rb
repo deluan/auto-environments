@@ -16,6 +16,7 @@ class InventoryFile
         @hosts.each do |host|
             file.write("#{host}.#{@environment}.#{@domain}\n")
         end
+        file.close
         file.path
     end
 end
