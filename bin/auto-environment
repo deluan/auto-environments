@@ -1,16 +1,23 @@
 #!/usr/bin/env ruby
 
 require 'yaml'
-require './lib/environment.rb'
-require './lib/inventory_file.rb'
-require './lib/playbook_file.rb'
+Dir['./lib/*.rb'].each {|file| require file }
 
-environment = Environment.new File.new('environments/dev.yml')
+Dir['./environments/*.yml'].each { |filename|
+    puts "\n#{filename}\n===================="
 
-hosts_path = environment.create_inventory InventoryFile.new 'petshop.example.com', 'dev'
-hosts_file = File.new hosts_path, 'r'
-puts hosts_file.read
+    env_file = File.new filename
+    environment = Environment.new env_file
 
-playbook_path = environment.create_playbook PlaybookFile.new 'petshop.example.com', 'dev'
-playbook_file = File.new playbook_path, 'r'
-puts playbook_file.read
+    env_name = File.basename(env_file.path, '.yml')
+
+    puts "hosts:\n"
+    hosts_path = environment.create_inventory InventoryFile.new 'petshop.example.com', env_name
+    hosts_file = File.new hosts_path, 'r'
+    puts hosts_file.read
+
+    puts "\nplaybook.yml:\n"
+    playbook_path = environment.create_playbook PlaybookFile.new 'petshop.example.com', env_name
+    playbook_file = File.new playbook_path, 'r'
+    puts playbook_file.read
+}
