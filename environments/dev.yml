@@ -1,0 +1,10 @@
+machines:
+  db:
+    - mysql
+  www:
+    - ruby19
+    - nginx
+    - passenger
+network:
+  domain: petshop.example.com
+  public_hosts: www
