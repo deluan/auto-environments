@@ -3,9 +3,14 @@
 require 'yaml'
 require './lib/environment.rb'
 require './lib/inventory_file.rb'
+require './lib/playbook_file.rb'
 
 environment = Environment.new File.new('environments/dev.yml')
-hosts_path = environment.create_inventory InventoryFile.new 'petshop.example.com', 'dev'
 
+hosts_path = environment.create_inventory InventoryFile.new 'petshop.example.com', 'dev'
 hosts_file = File.new hosts_path, 'r'
 puts hosts_file.read
+
+playbook_path = environment.create_playbook PlaybookFile.new 'petshop.example.com', 'dev'
+playbook_file = File.new playbook_path, 'r'
+puts playbook_file.read

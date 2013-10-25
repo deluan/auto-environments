@@ -7,10 +7,10 @@ describe Environment do
         @mock_env_file.stub(:read).and_return(content)
     end
     
+    let(:environment) {Environment.new @mock_env_file}
+    
     describe '.create_inventory' do
         let(:inventory_file) {InventoryFile.new 'petshop.example.com', 'staging'}
-
-        let(:environment) {Environment.new @mock_env_file}
         
         it 'should add each machine to the inventory file' do
             inventory_file.should_receive(:add_host).with('db')
@@ -23,5 +23,15 @@ describe Environment do
             path = environment.create_inventory inventory_file
             path.should == 'tmp_path'
         end            
+    end
+
+    describe '.create_playbook' do
+        let(:playbook_file) {PlaybookFile.new 'petshop.example.com', 'staging'}
+
+        it 'should add the roles for each machine to the playbook' do
+            playbook_file.should_receive(:add_roles).with('db', ['common', 'mysql'])
+            playbook_file.should_receive(:add_roles).with('www', ['common', 'ruby19', 'nginx', 'passenger'])
+            environment.create_playbook playbook_file
+        end
     end
 end
