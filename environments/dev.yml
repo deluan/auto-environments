@@ -5,8 +5,8 @@ machines:
   www:
     - common
     - ruby19
-    - nginx
     - passenger
+    - nginx
 network:
   domain: petshop.example.com
   public_hosts: www
