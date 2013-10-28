@@ -6,15 +6,20 @@ describe PlaybookFile do
     end
     
     it 'should create the playbook file' do
-        play = {
-            name: 'Provisioning www.staging.petshop.example.com',
-            hosts: 'www.staging.petshop.example.com',
-            roles: ['ruby19', 'passenger', 'nginx']
-        }
+        plays = [{
+                    'name' => 'Provisioning www.staging.petshop.example.com',
+                    'hosts' => 'www.staging.petshop.example.com',
+                    'roles' => ['ruby19', 'passenger', 'nginx']
+                }, {
+                    'name' => 'Provisioning db.staging.petshop.example.com',
+                    'hosts' => 'db.staging.petshop.example.com',
+                    'roles' => ['mysql']
+                }]
         @playbook_file.add_roles('www', ['ruby19'])
         @playbook_file.add_roles('www', ['passenger', 'nginx'])
+        @playbook_file.add_roles('db', ['mysql'])
 
-        Tempfile.any_instance.should_receive(:write).with(play.to_yaml)
+        Tempfile.any_instance.should_receive(:write).with(plays.to_yaml)
         @playbook_file.write_playbook_file
     end
 
