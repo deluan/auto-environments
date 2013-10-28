@@ -2,7 +2,7 @@ Usage
 =====
 * Clone [this repository](http://github.com/deluan/petshop-rails-ansible), which contains the sample ansible project that we will be using
 * Run "vagrant up" in the ansible project directory to create the VMs
-* In order to ssh to these VMs as the vagrant user, save the vagrant private key somewhere and run the following commands:
+* In order to ssh to these VMs as the vagrant user, save the [vagrant private key](http://raw.github.com/mitchellh/vagrant/master/keys/vagrant) somewhere and run the following commands:
 
   `ssh-agent`
   
