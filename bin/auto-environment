@@ -6,7 +6,6 @@ Dir['./lib/*.rb'].each {|file| require file }
 Dir['./environments/*.yml'].each { |filename|
     env_file = File.new filename
     environment = Environment.new env_file
-
     env_name = File.basename(env_file.path, '.yml')
 
     hosts_path = environment.create_inventory InventoryFile.new environment.domain, env_name
@@ -14,6 +13,6 @@ Dir['./environments/*.yml'].each { |filename|
     playbook_path = environment.create_playbook PlaybookFile.new environment.domain, env_name
 
     ansible_command = "ANSIBLE_ROLES_PATH=#{ARGV[0]}/roles ansible-playbook #{playbook_path} -i #{hosts_path} -u vagrant -e app_user=petshop"
-    puts "\n\nExecuting command: #{ansible_command}\n"
-    puts `#{ansible_command}`
+    puts "\n**** Provisioning #{env_name} ****\n"
+    puts `\n\n#{ansible_command}`
 }
