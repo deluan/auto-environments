@@ -34,4 +34,10 @@ describe Environment do
             environment.create_playbook playbook_file
         end
     end
+
+    describe '.domain' do
+        it 'should return the domain' do
+            environment.domain.should == 'petshop.example.com'
+        end
+    end
 end

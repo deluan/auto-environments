@@ -9,9 +9,9 @@ Dir['./environments/*.yml'].each { |filename|
 
     env_name = File.basename(env_file.path, '.yml')
 
-    hosts_path = environment.create_inventory InventoryFile.new 'petshop.example.com', env_name
+    hosts_path = environment.create_inventory InventoryFile.new environment.domain, env_name
 
-    playbook_path = environment.create_playbook PlaybookFile.new 'petshop.example.com', env_name
+    playbook_path = environment.create_playbook PlaybookFile.new environment.domain, env_name
 
     ansible_command = "ANSIBLE_ROLES_PATH=#{ARGV[0]} ansible-playbook #{playbook_path} -i #{hosts_path} -u vagrant -e app_user=petshop"
     puts "\n\nExecuting command: #{ansible_command}\n"
