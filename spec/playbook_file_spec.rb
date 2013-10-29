@@ -2,7 +2,7 @@ require 'spec_helper.rb'
 
 describe PlaybookFile do
     before do
-        @playbook_file = PlaybookFile.new 'petshop.example.com', 'staging'
+        @playbook_file = PlaybookFile.new('petshop.example.com', 'staging')
     end
     
     it 'should create the playbook file' do

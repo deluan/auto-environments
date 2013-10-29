@@ -15,7 +15,7 @@ class PlaybookFile
     end
 
     def write_playbook_file
-        file = Tempfile.new 'playbook.yml'
+        file = Tempfile.new('playbook.yml')
         plays = []
         @machines.each do |machine, roles|
             hostname = "#{machine}.#{@environment}.#{@domain}"
@@ -25,7 +25,7 @@ class PlaybookFile
                 'roles' => roles
             }
         end
-        file.write plays.to_yaml
+        file.write(plays.to_yaml)
         file.close
         file.path
     end

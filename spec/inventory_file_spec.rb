@@ -2,9 +2,9 @@ require 'spec_helper.rb'
 
 describe InventoryFile do
     before do
-        @inventory_file = InventoryFile.new 'petshop.example.com', 'staging'
-        @inventory_file.add_host 'www'
-        @inventory_file.add_host 'db'
+        @inventory_file = InventoryFile.new('petshop.example.com', 'staging')
+        @inventory_file.add_host('www')
+        @inventory_file.add_host('db')
     end
     
     it 'should create an ansible inventory file based on domain, environment, and host names' do

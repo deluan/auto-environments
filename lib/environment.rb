@@ -2,7 +2,7 @@ require 'yaml'
 
 class Environment
     def initialize(env_file)
-        @environment = YAML.load env_file.read
+        @environment = YAML.load(env_file.read)
     end
 
     def create_inventory(inventory_file)
@@ -16,7 +16,7 @@ class Environment
         @environment['machines'].each do |machine|
             playbook_file.add_roles(*machine)
         end
-        playbook_file.write_playbook_file        
+        playbook_file.write_playbook_file  
     end
 
     def domain
