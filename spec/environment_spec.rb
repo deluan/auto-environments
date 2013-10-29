@@ -5,6 +5,7 @@ describe Environment do
         @mock_env_file = double("file")
         content = "---\nmachines:\n  db:\n    - common\n    - mysql\n  www:\n    - common\n    - ruby19\n    - nginx\n    - passenger\nnetwork:\n  domain: petshop.example.com\n  public_hosts: www"
         @mock_env_file.stub(:read).and_return(content)
+        @mock_env_file.stub(:path).and_return('temp/staging.yml')
     end
     
     let(:environment) { Environment.new(@mock_env_file) }
@@ -38,6 +39,12 @@ describe Environment do
     describe '.domain' do
         it 'should return the domain' do
             environment.domain.should == 'petshop.example.com'
+        end
+    end
+
+    describe '.name' do
+        it 'should return the name of the environment based on the file name' do
+            environment.name.should == 'staging'
         end
     end
 end
