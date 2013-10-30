@@ -3,7 +3,7 @@
 require 'yaml'
 Dir['./lib/*.rb'].each { |file| require file }
 
-def bootstrap(environment)
+def configure(environment)
     inventory_path = environment.create_inventory(InventoryFile.new(environment.domain, environment.name))
     playbook_path = environment.create_playbook(PlaybookFile.new(environment.domain, environment.name))
 
@@ -14,5 +14,5 @@ end
 
 Dir['./environments/*.yml'].each do |environment_filename|
     environment = Environment.new(File.new(environment_filename))
-    bootstrap(environment)
+    configure(environment)
 end
