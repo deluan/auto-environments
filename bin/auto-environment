@@ -4,10 +4,12 @@ require 'yaml'
 Dir['./lib/*.rb'].each { |file| require file }
 
 def configure(environment)
+    ansible_project_base_dir = Pathname.new(ARGV[0]).realpath
+    
     inventory_path = environment.create_inventory(InventoryFile.new(environment.domain, environment.name))
-    playbook_path = environment.create_playbook(PlaybookFile.new(environment.domain, environment.name))
+    playbook_path = environment.create_playbook(PlaybookFile.new(environment.domain, environment.name, "#{ansible_project_base_dir}/create.yml"))
 
-    ansible_command = "ANSIBLE_ROLES_PATH=#{ARGV[0]}/roles ansible-playbook #{playbook_path} -i #{inventory_path} -u vagrant -e app_user=petshop"
+    ansible_command = "ANSIBLE_ROLES_PATH=#{ansible_project_base_dir}/roles ansible-playbook #{playbook_path} -i #{ansible_project_base_dir}/localhost_only -e app_user=petshop"
     puts "\n**** Provisioning #{environment.name} ****\n\n"
     puts `#{ansible_command}`
 end

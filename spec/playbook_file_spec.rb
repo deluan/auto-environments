@@ -2,17 +2,18 @@ require 'spec_helper.rb'
 
 describe PlaybookFile do
     before do
-        @playbook_file = PlaybookFile.new('petshop.example.com', 'staging')
+        @playbook_file = PlaybookFile.new('petshop.example.com', 'staging', '/path/to/ansible-proj/create.yml')
     end
     
     it 'should create the playbook file' do
-        plays = [{
+        plays = [{'include' => '/path/to/ansible-proj/create.yml'},
+                {
                     'name' => 'Provisioning www.staging.petshop.example.com',
-                    'hosts' => 'www.staging.petshop.example.com',
+                    'hosts' => 'www',
                     'roles' => ['ruby19', 'passenger', 'nginx']
                 }, {
                     'name' => 'Provisioning db.staging.petshop.example.com',
-                    'hosts' => 'db.staging.petshop.example.com',
+                    'hosts' => 'db',
                     'roles' => ['mysql']
                 }]
         @playbook_file.add_roles('www', ['ruby19'])

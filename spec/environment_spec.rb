@@ -27,7 +27,7 @@ describe Environment do
     end
 
     describe '.create_playbook' do
-        let(:playbook_file) { PlaybookFile.new('petshop.example.com', 'staging') }
+        let(:playbook_file) { PlaybookFile.new('petshop.example.com', 'staging', '/something/include.yml') }
 
         it 'should add the roles for each machine to the playbook' do
             playbook_file.should_receive(:add_roles).with('db', ['common', 'mysql'])

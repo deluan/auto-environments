@@ -2,10 +2,11 @@ require 'tempfile'
 require 'yaml'
 
 class PlaybookFile
-    def initialize(domain, environment)
+    def initialize(domain, environment, include_path)
         @plays = []
         @domain = domain
         @environment = environment
+        @include_path = include_path
         @machines = {}
     end
 
@@ -16,12 +17,13 @@ class PlaybookFile
 
     def write_playbook_file
         file = Tempfile.new('playbook.yml')
-        plays = []
+        plays = [{'include' => @include_path}]
+
         @machines.each do |machine, roles|
             hostname = "#{machine}.#{@environment}.#{@domain}"
             plays << {
                 'name' => "Provisioning #{hostname}",
-                'hosts' => hostname,
+                'hosts' => machine,
                 'roles' => roles
             }
         end
