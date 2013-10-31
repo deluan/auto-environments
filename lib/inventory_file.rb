@@ -12,10 +12,17 @@ class InventoryFile
     end
 
     def write_hosts_file
-        file = Tempfile.new 'hosts'
+        file = Tempfile.new('hosts')
         @hosts.each do |host|
             file.write("#{host}.#{@environment}.#{@domain}\n")
         end
+        file.close
+        file.path
+    end
+
+    def write_localhost_inventory_file
+        file = Tempfile.new('hosts')
+        file.write('localhost ansible_connection=local')
         file.close
         file.path
     end

@@ -17,6 +17,10 @@ class Environment
         inventory_file.write_hosts_file
     end
 
+    def create_localhost_inventory(inventory_file)
+        inventory_file.write_localhost_inventory_file
+    end
+
     def create_playbook(playbook_file)
         @environment['machines'].each do |machine|
             playbook_file.add_roles(*machine)

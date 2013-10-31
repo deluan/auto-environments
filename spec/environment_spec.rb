@@ -23,7 +23,22 @@ describe Environment do
             inventory_file.should_receive(:write_hosts_file).and_return('tmp_path')
             path = environment.create_inventory(inventory_file)
             path.should == 'tmp_path'
-        end            
+        end
+    end
+
+    describe '.create_localhost_inventory' do
+        let(:inventory_file) { InventoryFile.new('petshop.example.com', 'staging') }
+        
+        it 'should create a localhost only inventory file' do
+            inventory_file.should_receive(:write_localhost_inventory_file)
+            environment.create_localhost_inventory(inventory_file)
+        end
+
+        it 'should create the inventory file and return the path' do
+            inventory_file.should_receive(:write_localhost_inventory_file).and_return('tmp_path')
+            path = environment.create_localhost_inventory(inventory_file)
+            path.should == 'tmp_path'
+        end
     end
 
     describe '.create_playbook' do
