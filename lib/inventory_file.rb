@@ -11,7 +11,7 @@ class InventoryFile
         @hosts << host
     end
 
-    def write_hosts_file
+    def write_inventory_file
         file = Tempfile.new('hosts')
         @hosts.each do |host|
             file.write("#{host}.#{@environment}.#{@domain}\n")

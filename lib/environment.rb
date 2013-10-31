@@ -14,7 +14,7 @@ class Environment
         @environment['machines'].each do |machine|
             inventory_file.add_host(machine[0])
         end
-        inventory_file.write_hosts_file
+        inventory_file.write_inventory_file
     end
 
     def create_localhost_inventory(inventory_file)

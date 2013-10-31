@@ -20,7 +20,7 @@ describe Environment do
         end
 
         it 'should create the inventory file and return the path' do
-            inventory_file.should_receive(:write_hosts_file).and_return('tmp_path')
+            inventory_file.should_receive(:write_inventory_file).and_return('tmp_path')
             path = environment.create_inventory(inventory_file)
             path.should == 'tmp_path'
         end
