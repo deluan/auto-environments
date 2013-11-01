@@ -27,4 +27,13 @@ class Environment
         end
         playbook_file.write_playbook_file  
     end
+
+    def machine_names
+        @environment['machines'].map { |machine| machine[0] }
+    end
+
+    def roles_for(machine_name)
+        machine = @environment['machines'].find { |machine| machine[0] == machine_name }
+        machine[1] if machine
+    end
 end

@@ -3,18 +3,40 @@
 require 'yaml'
 Dir['./lib/*.rb'].each { |file| require file }
 
-def configure(environment)
-    ansible_project_base_dir = Pathname.new(ARGV[0]).realpath
+def configure(environment, verbose)
+    ansible_project_base_dir = Pathname.new(ARGV[1]).realpath
     
     inventory_path = environment.create_localhost_inventory(InventoryFile.new(environment.domain, environment.name))
     playbook_path = environment.create_playbook(PlaybookFile.new(environment.domain, environment.name, "#{ansible_project_base_dir}/create.yml"))
 
     ansible_command = "ANSIBLE_ROLES_PATH=#{ansible_project_base_dir}/roles ansible-playbook #{playbook_path} -i #{inventory_path} -e \"app_user=petshop environment=#{environment.name}\""
-    puts "\n**** Provisioning #{environment.name} ****\n\n"
-    puts `#{ansible_command}`
+
+    ansible_output = `cd #{ansible_project_base_dir} && #{ansible_command}`
+    success = ($?.exitstatus == 0)
+    
+    log_file = File.new('./auto-environment.log', 'a')
+    write_ansible_log(log_file, ansible_command, ansible_output)
+    puts ansible_output if verbose
+    print_results(environment, success, log_file)
 end
 
-Dir['./environments/*.yml'].each do |environment_filename|
-    environment = Environment.new(File.new(environment_filename))
-    configure(environment)
+def write_ansible_log(log_file, ansible_command, ansible_output)
+    log_file.write("#{Time.now.to_s}: Executing ansible command: #{ansible_command}\n#{ansible_output}")
 end
+
+def print_results(environment, success, log_file)
+    if success
+        environment.machine_names.each do |machine_name|
+            puts "\n#{machine_name}.#{environment.name}.#{environment.domain} provisioned\n  with #{environment.roles_for(machine_name).join(', ')}\n"
+        end
+    else
+        puts "Oops, something went wrong. Please see #{log_file.path} or run again with -v for more information"
+    end
+end
+
+verbose = ARGV.delete('-v') ? true : false
+
+abort('Usage: auto-environment [environment.yml] [path/to/ansible_project]') unless ARGV[0] and ARGV[1]
+
+environment = Environment.new(File.new(ARGV[0]))
+configure(environment, verbose)

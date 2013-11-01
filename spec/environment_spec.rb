@@ -62,4 +62,21 @@ describe Environment do
             environment.name.should == 'staging'
         end
     end
+
+    describe '.machine_names' do
+        it 'should return a list of all the machines in the environment' do
+            environment.machine_names.should == ['db', 'www']
+        end
+    end
+
+    describe '.roles_for' do
+        it 'should return a list of all the roles configured for the given machine' do
+            environment.roles_for('www').should == ['common', 'ruby19', 'nginx', 'passenger']
+            environment.roles_for('db').should == ['common', 'mysql']
+        end
+
+        it 'should return nil if the machine name is not valid' do
+            environment.roles_for('invalid').should be_nil
+        end
+    end
 end
