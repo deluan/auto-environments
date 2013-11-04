@@ -1,6 +1,6 @@
 require 'tempfile'
 
-class InventoryFile
+class InventoryFileWriter
     def initialize(domain, environment)
         @hosts = []
         @domain = domain

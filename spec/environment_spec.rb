@@ -11,32 +11,32 @@ describe Environment do
     let(:environment) { Environment.new(@mock_env_file) }
     
     describe '.create_inventory' do
-        let(:inventory_file) { InventoryFile.new('petshop.example.com', 'staging') }
+        let(:inventory_file_writer) { InventoryFileWriter.new('petshop.example.com', 'staging') }
         
         it 'should add each machine to the inventory file' do
-            inventory_file.should_receive(:add_host).with('db')
-            inventory_file.should_receive(:add_host).with('www')
-            environment.create_inventory(inventory_file)
+            inventory_file_writer.should_receive(:add_host).with('db')
+            inventory_file_writer.should_receive(:add_host).with('www')
+            environment.create_inventory(inventory_file_writer)
         end
 
         it 'should create the inventory file and return the path' do
-            inventory_file.should_receive(:write_inventory_file).and_return('tmp_path')
-            path = environment.create_inventory(inventory_file)
+            inventory_file_writer.should_receive(:write_inventory_file).and_return('tmp_path')
+            path = environment.create_inventory(inventory_file_writer)
             path.should == 'tmp_path'
         end
     end
 
     describe '.create_localhost_inventory' do
-        let(:inventory_file) { InventoryFile.new('petshop.example.com', 'staging') }
+        let(:inventory_file_writer) { InventoryFileWriter.new('petshop.example.com', 'staging') }
         
         it 'should create a localhost only inventory file' do
-            inventory_file.should_receive(:write_localhost_inventory_file)
-            environment.create_localhost_inventory(inventory_file)
+            inventory_file_writer.should_receive(:write_localhost_inventory_file)
+            environment.create_localhost_inventory(inventory_file_writer)
         end
 
         it 'should create the inventory file and return the path' do
-            inventory_file.should_receive(:write_localhost_inventory_file).and_return('tmp_path')
-            path = environment.create_localhost_inventory(inventory_file)
+            inventory_file_writer.should_receive(:write_localhost_inventory_file).and_return('tmp_path')
+            path = environment.create_localhost_inventory(inventory_file_writer)
             path.should == 'tmp_path'
         end
     end

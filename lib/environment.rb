@@ -10,15 +10,15 @@ class Environment
         @domain = @environment['network']['domain']
     end
 
-    def create_inventory(inventory_file)
+    def create_inventory(inventory_file_writer)
         @environment['machines'].each do |machine|
-            inventory_file.add_host(machine[0])
+            inventory_file_writer.add_host(machine[0])
         end
-        inventory_file.write_inventory_file
+        inventory_file_writer.write_inventory_file
     end
 
-    def create_localhost_inventory(inventory_file)
-        inventory_file.write_localhost_inventory_file
+    def create_localhost_inventory(inventory_file_writer)
+        inventory_file_writer.write_localhost_inventory_file
     end
 
     def create_playbook(playbook_file)
