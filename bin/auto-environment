@@ -18,10 +18,14 @@ def configure(environment)
   ansible_output = execute_shell "cd #{ansible_project_base_dir} && #{ansible_command}"
   success = ($?.exitstatus == 0)
 
-  FileUtils.mkpath('log')
-  log_file = File.new('./log/auto-environment.log', 'a')
+  log_file = get_log_file
   write_ansible_log(log_file, ansible_command, ansible_output)
   print_results(environment, success, log_file)
+end
+
+def get_log_file
+  FileUtils.mkpath('log')
+  File.new('./log/auto-environment.log', 'a')
 end
 
 def write_ansible_log(log_file, ansible_command, ansible_output)
