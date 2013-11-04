@@ -2,6 +2,7 @@
 
 require 'yaml'
 require 'pty'
+require 'pathname'
 require 'environment'
 require 'inventory_file'
 require 'playbook_file'
@@ -17,7 +18,8 @@ def configure(environment)
   ansible_output = execute_shell "cd #{ansible_project_base_dir} && #{ansible_command}"
   success = ($?.exitstatus == 0)
 
-  log_file = File.new('./auto-environment.log', 'a')
+  FileUtils.mkpath('log')
+  log_file = File.new('./log/auto-environment.log', 'a')
   write_ansible_log(log_file, ansible_command, ansible_output)
   print_results(environment, success, log_file)
 end
