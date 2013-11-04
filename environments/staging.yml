@@ -8,5 +8,5 @@ machines:
     - passenger
     - nginx
 network:
-  domain: petshop.example.com
+  domain: auto-environment.info
   public_hosts: www
