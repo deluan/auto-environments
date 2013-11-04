@@ -42,4 +42,6 @@ staging.yml:
         - passenger
         - nginx
     network:
-      domain: auto-environment.info
+      domain: petshop.example.com
+
+Running auto-environment against this file will launch two EC2 instances (if they are not running already), update the DNS configuration so they are accessible at db.staging.petshop.example.com and www.staging.petshop.example.com, and configure them with the ansible roles that are listed for each.
