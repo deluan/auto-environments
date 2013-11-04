@@ -1,7 +1,7 @@
 require 'tempfile'
 require 'yaml'
 
-class PlaybookFile
+class PlaybookFileWriter
     def initialize(domain, environment, include_path)
         @plays = []
         @domain = domain

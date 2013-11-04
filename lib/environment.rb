@@ -21,11 +21,11 @@ class Environment
         inventory_file_writer.write_localhost_inventory_file
     end
 
-    def create_playbook(playbook_file)
+    def create_playbook(playbook_file_writer)
         @environment['machines'].each do |machine|
-            playbook_file.add_roles(*machine)
+            playbook_file_writer.add_roles(*machine)
         end
-        playbook_file.write_playbook_file  
+        playbook_file_writer.write_playbook_file  
     end
 
     def machine_names

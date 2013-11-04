@@ -42,12 +42,12 @@ describe Environment do
     end
 
     describe '.create_playbook' do
-        let(:playbook_file) { PlaybookFile.new('petshop.example.com', 'staging', '/something/include.yml') }
+        let(:playbook_file_writer) { PlaybookFileWriter.new('petshop.example.com', 'staging', '/something/include.yml') }
 
         it 'should add the roles for each machine to the playbook' do
-            playbook_file.should_receive(:add_roles).with('db', ['common', 'mysql'])
-            playbook_file.should_receive(:add_roles).with('www', ['common', 'ruby19', 'nginx', 'passenger'])
-            environment.create_playbook(playbook_file)
+            playbook_file_writer.should_receive(:add_roles).with('db', ['common', 'mysql'])
+            playbook_file_writer.should_receive(:add_roles).with('www', ['common', 'ruby19', 'nginx', 'passenger'])
+            environment.create_playbook(playbook_file_writer)
         end
     end
 

@@ -4,14 +4,14 @@ require 'yaml'
 require 'pty'
 require 'pathname'
 require 'environment'
-require './lib/inventory_file_writer.rb'
-require 'playbook_file'
+require 'inventory_file_writer'
+require 'playbook_file_writer'
 
 def configure(environment)
   ansible_project_base_dir = Pathname.new(ARGV[1]).realpath
 
   inventory_path = environment.create_localhost_inventory(InventoryFileWriter.new(environment.domain, environment.name))
-  playbook_path = environment.create_playbook(PlaybookFile.new(environment.domain, environment.name, "#{ansible_project_base_dir}/create.yml"))
+  playbook_path = environment.create_playbook(PlaybookFileWriter.new(environment.domain, environment.name, "#{ansible_project_base_dir}/create.yml"))
 
   ansible_command = "ANSIBLE_ROLES_PATH=#{ansible_project_base_dir}/roles ansible-playbook #{playbook_path} -i #{inventory_path} -e \"app_user=petshop env_name=#{environment.name} domain=#{environment.domain}\""
 
