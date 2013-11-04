@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name        = 'auto-environments'
+  s.name        = 'auto-environment'
   s.version     = '0.0.1'
   s.date        = '2013-10-25'
   s.summary     = "Auto provisions environments"

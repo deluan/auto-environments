@@ -2,7 +2,9 @@
 
 require 'yaml'
 require 'pty'
-Dir['./lib/*.rb'].each { |file| require file }
+require 'environment'
+require 'inventory_file'
+require 'playbook_file'
 
 def configure(environment)
   ansible_project_base_dir = Pathname.new(ARGV[1]).realpath
@@ -11,7 +13,6 @@ def configure(environment)
   playbook_path = environment.create_playbook(PlaybookFile.new(environment.domain, environment.name, "#{ansible_project_base_dir}/create.yml"))
 
   ansible_command = "ANSIBLE_ROLES_PATH=#{ansible_project_base_dir}/roles ansible-playbook #{playbook_path} -i #{inventory_path} -e \"app_user=petshop env_name=#{environment.name} domain=#{environment.domain}\""
-
 
   ansible_output = execute_shell "cd #{ansible_project_base_dir} && #{ansible_command}"
   success = ($?.exitstatus == 0)
@@ -55,7 +56,7 @@ end
 
 @quiet = ARGV.delete('-q') ? true : false
 
-abort('Usage: auto-environment [environment.yml] [path/to/ansible_project]') unless ARGV[0] and ARGV[1]
+abort("Usage: auto-environment <environment.yml> <path/to/ansible_project>\n\nOptions:\n  -q\t\tRun in quiet mode (suppresses ansible output)") unless ARGV[0] and ARGV[1]
 
 environment = Environment.new(File.new(ARGV[0]))
 configure(environment)
