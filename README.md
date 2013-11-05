@@ -14,6 +14,8 @@ You will also need the private key to a key pair called "petshop" that has been 
 
 You will also have to create a hosted zone in [Route 53](http://aws.amazon.com/route53) for the domain that these instances will be accessible from and configure the name servers for your domain accordingly. Ansible will handle adding an A record for each instance.
 
+Note: this project requires features present only in Ansible version 1.4 and later
+
 Installation
 ====
 Add the auto-environment gem to your Gemfile:
