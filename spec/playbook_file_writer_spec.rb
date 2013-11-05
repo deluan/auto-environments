@@ -6,11 +6,11 @@ describe PlaybookFileWriter do
     it 'should create the playbook file' do
         plays = [{'include' => '/path/to/ansible-proj/create.yml'},
                 {
-                    'name' => 'Provisioning www.staging.petshop.example.com',
+                    'name' => 'Configuring www.staging.petshop.example.com',
                     'hosts' => 'www',
                     'roles' => ['ruby19', 'passenger', 'nginx']
                 }, {
-                    'name' => 'Provisioning db.staging.petshop.example.com',
+                    'name' => 'Configuring db.staging.petshop.example.com',
                     'hosts' => 'db',
                     'roles' => ['mysql']
                 }]

@@ -22,7 +22,7 @@ class PlaybookFileWriter
         @machines.each do |machine, roles|
             hostname = "#{machine}.#{@environment}.#{@domain}"
             plays << {
-                'name' => "Provisioning #{hostname}",
+                'name' => "Configuring #{hostname}",
                 'hosts' => machine,
                 'roles' => roles
             }
